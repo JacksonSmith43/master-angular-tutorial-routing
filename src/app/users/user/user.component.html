@@ -1,5 +1,5 @@
 <div>
-  <a [routerLink]="['/users', user().id]" routerLinkActive="selected"> <!-- Is the same as: [routerLink]="'/users/' + user().id"" -->
+  <a [routerLink]="['/users', user().id, 'tasks']" routerLinkActive="selected"> <!-- Is the same as: [routerLink]="'/users/' + user().id"" -->
     <img [src]="imagePath()" [alt]="user().name" />
     <span>{{ user().name }}</span>
   </a>

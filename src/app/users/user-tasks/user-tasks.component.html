@@ -2,9 +2,9 @@
   <header>
     <h2>{{userName}}´s Tasks</h2>
     <menu>
-      <a>Add Task</a>
+      <a [routerLink]="['tasks/new']">Add Task</a> <!-- This is a relative link to the new task route. -->
     </menu>
   </header>
 
-  <router-outlet/>
+  <router-outlet />
 </section>
