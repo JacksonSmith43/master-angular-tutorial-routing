@@ -30,9 +30,8 @@ export class NewTaskComponent {
       this.userId()
     );
 
-    this.router.navigate(["/users", this.userId(), "tasks"], {
-      replaceUrl: true,
+    this.router.navigate(["/users", this.userId(), "tasks"], { // This is used to navigate to the tasks page of the user after adding a new task.
+      replaceUrl: true, // replaceUrl is used to prevent the user from going back to the new task page using the back button.
     });
-
   }
 }

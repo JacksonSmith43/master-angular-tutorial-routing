@@ -4,6 +4,7 @@ import { NoTaskComponent } from "./tasks/no-task/no-task.component";
 import { UserTasksComponent } from "./users/user-tasks/user-tasks.component";
 import { TasksComponent } from "./tasks/tasks.component";
 import { NewTaskComponent } from "./tasks/new-task/new-task.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 export const routes: Routes = [
     {
@@ -23,5 +24,9 @@ export const routes: Routes = [
                 component: NewTaskComponent
             }
         ]
+    },
+    {
+        path: "**", // This is a wildcard path that will match any path that is not defined above. It is used to show a 404 page. 
+        component: NotFoundComponent
     }
 ]
