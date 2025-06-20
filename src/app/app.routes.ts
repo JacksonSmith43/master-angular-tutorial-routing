@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
-import { TasksComponent } from "./tasks/tasks.component";
+
 import { NoTaskComponent } from "./tasks/no-task/no-task.component";
+import { UserTasksComponent } from "./users/user-tasks/user-tasks.component";
 
 export const routes: Routes = [
     {
@@ -8,7 +9,7 @@ export const routes: Routes = [
         component: NoTaskComponent
     },
     {
-        path: "tasks", // This is is the path that will be used in the URL.
-        component: TasksComponent,
+        path: "users/:userId", // URL: path: <domain>/users/<u1>
+        component: UserTasksComponent,
     }
 ]
