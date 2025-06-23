@@ -9,7 +9,7 @@ import { inject } from "@angular/core";
 const dummyCanMatch: CanMatchFn = (route, segments) => { // With this function, we can control whether the route can be activated or not. It is a synchronous function that returns true or false, or a RedirectCommand to redirect the user to another route.
     const shouldGetAccesss = Math.random();
     const router = inject(Router); // We inject the Router service to be able to redirect the user if they do not have access to the route.
-    if (shouldGetAccesss < 0.5) {
+    if (shouldGetAccesss < 1) {
         return true;
     }
     return new RedirectCommand(router.parseUrl("/unauthorised")); // This will redirect the user to the /unauthorised route if they do not have access to the route.

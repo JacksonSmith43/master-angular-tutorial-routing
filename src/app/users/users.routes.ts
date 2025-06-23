@@ -12,7 +12,7 @@ export const routes: Routes = [
     {
         path: 'tasks', // <your-domain>/users/<uid>/tasks
         component: TasksComponent,
-        runGuardsAndResolvers: "paramsOrQueryParamsChange", // This ensures that the component is reloaded when the query parameters change. Otherwise, the component would not be reloaded when the query parameters change and only when the route parameters change. Route parameters are the parameters defined in the path, such as userId in users/:userId. Query parameters are the parameters defined in the URL after the question mark, such as ?order=asc. 
+        runGuardsAndResolvers: "always", // This ensures that the component is reloaded when the query parameters change. Otherwise, the component would not be reloaded when the query parameters change and only when the route parameters change. Route parameters are the parameters defined in the path, such as userId in users/:userId. Query parameters are the parameters defined in the URL after the question mark, such as ?order=asc. 
         resolve: {
             userTasks: resolveUserTasks,
         },
