@@ -10,7 +10,7 @@ export const routes: Routes = [
     },
     {
         path: "tasks", // This path will be appended to the parent path, resulting in <domain>/users/<u1>/tasks
-        component: TasksComponent
+        component: TasksComponent,
     },
     {
         path: "tasks/new",

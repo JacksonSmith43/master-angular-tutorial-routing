@@ -14,6 +14,9 @@ export const routes: Routes = [
         path: "users/:userId", // URL: path: <domain>/users/<u1>
         component: UserTasksComponent,
         children: userRoutes, // This will load the user-specific routes defined in users.routes.ts. 
+        data: {
+            message: 'Hola.'
+        }
     },
     {
         path: "**", // This is a wildcard path that will match any path that is not defined above. It is used to show a 404 page. 
