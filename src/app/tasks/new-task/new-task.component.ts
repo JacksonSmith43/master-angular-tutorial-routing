@@ -17,6 +17,7 @@ export class NewTaskComponent {
   enteredTitle = signal('');
   enteredSummary = signal('');
   enteredDate = signal('');
+  submitted = false;
   private tasksService = inject(TasksService);
   private router = inject(Router);
 
@@ -29,6 +30,7 @@ export class NewTaskComponent {
       },
       this.userId()
     );
+    this.submitted = true;
 
     this.router.navigate(["/users", this.userId(), "tasks"], { // This is used to navigate to the tasks page of the user after adding a new task.
       replaceUrl: true, // replaceUrl is used to prevent the user from going back to the new task page using the back button.
@@ -37,6 +39,10 @@ export class NewTaskComponent {
 }
 
 export const canLeaveEditGuard: CanDeactivateFn<NewTaskComponent> = (component) => {
+  if (component.submitted) {
+    return true;
+  }
+
   if (component.enteredTitle() || component.enteredDate() || component.enteredSummary()) {
     return window.confirm("Do you wish to leave the page. Entered data will be lost.");
   }
