@@ -20,4 +20,8 @@ export const resolveUserName: ResolveFn<string> = (activatedRoute: ActivatedRout
   const usersService = inject(UsersService);
   const userName = usersService.users.find((u) => u.id === activatedRoute.paramMap.get("userId"))?.name || "";
   return userName;
-} 
+}
+
+export const resolveTitle: ResolveFn<string> = (activatedRoute: ActivatedRouteSnapshot, routerState: RouterStateSnapshot) => { // The first parameter is the ActivatedRouteSnapshot, which contains the information about the route that is being activated. The second parameter is the RouterStateSnapshot, which contains the information about the state of the router at the time of activation.
+  return resolveUserName(activatedRoute, routerState) + '\'s Tasks' // This will return the title for the user tasks page.
+}
