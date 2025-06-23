@@ -2,7 +2,7 @@ import { Component, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TasksService } from '../tasks.service';
-import { Router } from '@angular/router';
+import { CanDeactivateFn, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-task',
@@ -34,4 +34,11 @@ export class NewTaskComponent {
       replaceUrl: true, // replaceUrl is used to prevent the user from going back to the new task page using the back button.
     });
   }
+}
+
+export const canLeaveEditGuard: CanDeactivateFn<NewTaskComponent> = (component) => {
+  if (component.enteredTitle() || component.enteredDate() || component.enteredSummary()) {
+    return window.confirm("Do you wish to leave the page. Entered data will be lost.");
+  }
+  return true;
 }
