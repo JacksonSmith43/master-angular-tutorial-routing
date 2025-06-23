@@ -1,8 +1,9 @@
-import { Component, input, inject, computed, OnInit, DestroyRef, signal } from '@angular/core';
+import { Component, inject, input, } from '@angular/core';
+import { ResolveFn, RouterLink } from '@angular/router';
 
 import { TaskComponent } from './task/task.component';
 import { TasksService } from './tasks.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Task } from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -12,30 +13,29 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   imports: [TaskComponent, RouterLink],
 })
 
-export class TasksComponent implements OnInit {
-  private tasksService = inject(TasksService);
+export class TasksComponent {
+  userTasks = input.required<Task[]>();
   userId = input.required<string>();
-  order = signal<'asc' | 'desc'>('desc');
-
-  userTasks = computed(() => this.tasksService.allTasks()
-    .filter((task) => task.userId === this.userId()) // Filters tasks by userId. computed is used to automatically update when userId changes. 
-    .sort((a, b) => { // Sorts tasks by id in ascending or descending order based on the order signal.
-      if (this.order() === 'desc') {
-        return a.id > b.id ? -1 : 1; // If order is 'desc', sort in descending order. -1 means a comes before b, 1 means b comes before a.
-
-      } else {
-        return a.id > b.id ? 1 : -1;
-      }
-    })
-  );
-
-  private activatedRoute = inject(ActivatedRoute);
-  private destroyRef = inject(DestroyRef);
-
-  ngOnInit(): void {
-    const subscription = this.activatedRoute.queryParams.subscribe({ // This is a subscription to the queryParams observable of the ActivatedRoute which will emit whenever the query parameters change.
-      next: params => (this.order.set(params['order'])), // params['order'] will contain the current order query parameter value which will be saved in the order input property. 
-    });
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
+  order = input<'asc' | 'desc' | undefined>();
 }
+
+export const resolveUserTasks: ResolveFn<Task[]> = (activatedRouteSnapshot, routerState) => {
+
+  const order = activatedRouteSnapshot.queryParams['order'];
+  const tasksService = inject(TasksService);
+
+  const tasks = tasksService
+    .allTasks()
+    .filter(
+      (task) => task.userId === activatedRouteSnapshot.paramMap.get('userId')
+    );
+
+  if (order && order === 'asc') {
+    tasks.sort((a, b) => (a.id > b.id ? 1 : -1));
+
+  } else {
+    tasks.sort((a, b) => (a.id > b.id ? -1 : 1));
+  }
+
+  return tasks.length ? tasks : [];
+};
